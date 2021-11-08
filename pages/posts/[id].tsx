@@ -1,4 +1,3 @@
-import type { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 
 import { getAllPostIds, getPostData } from '../../lib/posts';
@@ -14,7 +13,7 @@ type PostData = {
 	id: string;
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getStaticPaths = async () => {
 	const paths = getAllPostIds();
 	return {
 		paths,
@@ -22,7 +21,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	};
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps = async ({
+	params,
+}: {
+	params: { id: string };
+}) => {
 	const postData = await getPostData(params.id as string);
 	return {
 		props: {
